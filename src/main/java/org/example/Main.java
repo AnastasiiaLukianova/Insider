@@ -25,22 +25,17 @@ public class Main {
         WebElement AcceptAllCookies = driver.findElement(By.id("wt-cli-accept-all-btn"));
         AcceptAllCookies.click();
 
-        WebElement companyLink = driver.findElement(By.xpath("//a[normalize-space(text())='Company' and @id='navbarDropdownMenuLink']"));
-        companyLink.click();
+    // Check Career page for "Locations" block
+        try {
 
+            WebElement companyLink = driver.findElement(By.xpath("//a[normalize-space(text())='Company' and @id='navbarDropdownMenuLink']"));
+            companyLink.click();
 
 //Test 2 Click Career  Locations, Teams and Life at Insider blocks
 
-        //WebElement careerButton = driver.findElement(By.id("navbarNavDropdown"));
-        WebElement careersLink = driver.findElement(By.xpath("//a[text()='Careers']"));
-        careersLink.click();
-
-        //driver.get("https://useinsider.com/careers/");
-
-    // Check Career page for "Locations" block
-        try {
-            // Open the careers page
-            //driver.get("https://useinsider.com/careers/");
+            //WebElement careerButton = driver.findElement(By.id("navbarNavDropdown"));
+            WebElement careersLink = driver.findElement(By.xpath("//a[text()='Careers']"));
+            careersLink.click();
 
             // Array of city names to check
             // TO DO Automatically grab cities from the page
