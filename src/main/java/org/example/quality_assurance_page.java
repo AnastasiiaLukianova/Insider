@@ -21,7 +21,7 @@ public class quality_assurance_page {
         // Navigate to the Quality Assurance careers page
         driver.get("https://useinsider.com/careers/quality-assurance/");
 
-        // Maximize the browser window
+        // Maximize and accept cookies the browser window
         driver.manage().window().maximize();
         WebElement AcceptAllCookies = driver.findElement(By.id("wt-cli-accept-all-btn"));
         AcceptAllCookies.click();
