@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,8 @@ public class Main {
         String insiderUrl = "https://useinsider.com/";
 
 // Initialize the ChromeDriver
-        WebDriver driver = new ChromeDriver();
+        //WebDriver driver = new ChromeDriver();
+        WebDriver driver = new FirefoxDriver();
 
 
 //Test 1 Open Click Company
