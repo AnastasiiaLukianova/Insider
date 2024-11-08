@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GET_Read {
 
@@ -14,29 +14,49 @@ public class GET_Read {
     }
 
     @Test
-    public void testGetPetPositive() {
-        int petId = 123456;
+    public void testCreatePetPositive() {
+        String petData = """
+            {
+                "id": 123456,
+                "category": {"id": 0, "name": "dog"},
+                "name": "Buddy",
+                "photoUrls": ["string"],
+                "tags": [{"id": 0, "name": "friendly"}],
+                "status": "available"
+            }
+        """;
 
         Response response = given()
+                .contentType(ContentType.JSON)
+                .body(petData)
                 .when()
-                .get("/" + petId);
+                .post();
 
         response.then()
                 .statusCode(200)
-                .body("id", equalTo(petId))
+                .body("id", equalTo(123456))
                 .body("name", equalTo("Buddy"));
     }
 
     @Test
-    public void testGetPetNegative() {
-        int nonExistentId = 999999;
+    public void testCreatePet403Forbidden() {
+        String petData = """
+            {
+                "id": 987654,
+                "category": {"id": 1, "name": "dog"},
+                "name": "UnauthorizedPet",
+                "photoUrls": ["string"],
+                "tags": [{"id": 1, "name": "test"}],
+                "status": "available"
+            }
+        """;
 
         Response response = given()
+                .contentType(ContentType.JSON)
+                .body(petData)
                 .when()
-                .get("/" + nonExistentId);
+                .post();
 
-        response.then()
-                .statusCode(404);
+        assertEquals(403, response.statusCode(), "Expected 403 Forbidden status code");
     }
-
 }
