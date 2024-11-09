@@ -2,7 +2,9 @@ package org.example;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.io.FileHandler;
 
 import java.io.File;
@@ -14,10 +16,11 @@ public class Main_upd {
     public static void main(String[] args) {
         String insiderUrl = "https://useinsider.com/";
         String browser = System.getProperty("browser", "chrome");
+        boolean isHeadless = false; // Set this to true or false based on your requirements
         WebDriver driver = null;
 
         // Try to initialize the WebDriver automatically (if supported by Selenium 4)
-        driver = createDriverAutomatically(browser);
+        driver = createDriverAutomatically(browser,isHeadless);
 
         // Fallback to manual setup if automatic creation fails
         if (driver == null) {
@@ -90,13 +93,27 @@ public class Main_upd {
     }
 
     // Method to automatically create the driver if Selenium 4 or higher is used
-    public static WebDriver createDriverAutomatically(String browser) {
+    public static WebDriver createDriverAutomatically(String browser,boolean isHeadless) {
         try {
             switch (browser.toLowerCase()) {
                 case "chrome":
-                    return new ChromeDriver(); // Selenium 4 supports direct creation
+                // Set up ChromeOptions
+                    ChromeOptions chromeOptions = new ChromeOptions();
+                    if (isHeadless) {
+                        chromeOptions.addArguments("--headless"); // Enable headless mode
+                        chromeOptions.addArguments("--disable-gpu"); // Recommended for headless mode
+                    }
+                    return new ChromeDriver(chromeOptions); // Selenium 4 supports direct creation
+
                 case "firefox":
-                    return new FirefoxDriver(); // Selenium 4 supports direct creation
+                    // Set up FirefoxOptions
+                    FirefoxOptions firefoxOptions = new FirefoxOptions();
+                    if (isHeadless) {
+                        // Enable headless mode for Firefox
+                        firefoxOptions.addArguments("--headless");
+                    }
+                    return new FirefoxDriver(firefoxOptions); // Selenium 4 supports direct creation
+
                 default:
                     System.out.println("Unsupported browser for automatic setup: " + browser);
                     return null;
